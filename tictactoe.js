@@ -22,14 +22,16 @@ const testInput = [	[' ', ' ', ' '],
  * ================================================================================
  */
 const BOARD_INIT_VALUES = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
-const A1 = 0
-const A2 = 1
-const A3 = 2
+const COORDINATES = {A: 0, B: 1, C: 2}
+
+// Node Lib prompt-sync
+const prompt = require('prompt-sync')();
 
 
 /**
  * Generate and return the 3x3 board
- * @param {boardValues} 3x3 Array
+ * @param	{Array} 	boardValues 3x3 index Array (2D)
+ * @returns	{String}				formatted board grid with values (String literal)
  */
 function generateBoard(boardValues) {
 	let board = '';
@@ -55,12 +57,13 @@ function generateBoard(boardValues) {
 /**
  * The core of the game. Calculate positions of X's and O's in the 3D Array.
  * Return either the winner (strings 'X' or 'O') or false (no winning positions)
- * @param 
+ * @param	{Array} 	boardValues 3x3 index Array (2D)
+ * @returns 						Single Char String or False
  */
 function calculateGameState(boardValues) {
 
 	/**
-	 * @todo
+	 * Check rows for equal elements and return it's char if all are equal
 	 */
 	for(let row = 0; row < 3; row++) {
 		if(boardValues[row][2] && boardValues[row][1] && boardValues[row][0] === ('X' || 'O')) {
@@ -69,7 +72,7 @@ function calculateGameState(boardValues) {
 	}
 
 	/**
-	 * @todo
+	 * Check columns for equal elements and return it's char if all are equal
 	 */
 	for(let col = 0; col < 3; col++) {
 		if(boardValues[2][col] && boardValues[1][col] && boardValues[0][col] === ('X' || 'O')) {
@@ -78,7 +81,7 @@ function calculateGameState(boardValues) {
 	}
 
 	/**
-	 * @todo
+	 * Check diagonals for equal elements and return it's char if all are equal
 	 */
 	if(	((boardValues[0][0] && boardValues[1][1] && boardValues[2][2]) === ('X' || 'O')) || 
 		((boardValues[2][0] && boardValues[1][1] && boardValues[0][2]) === ('X' || 'O'))
@@ -87,17 +90,24 @@ function calculateGameState(boardValues) {
 		return boardValues[1][1];
 	}
 
-	// Return false when game is not decided
+	// Return false if no char appears 3 times in a row
 	return false;
 }
-console.log(calculateGameState(testInput));
 
 
 /**
- * Play one game of Tic Tac Toe
+ * Split up the input string and assign it to a grid coordinate
+ * @param	{string} 	playerInput 	Input of Player 1 or 2
+ * @param	{Array} 	boardValues 	3x3 index Array (2D)
+ * @returns {Array}						3x3 index Array (2D), false if wrong input
  */
-function playOneRound(boardValues, choicePlayer1, choicePlayer2) {
+function playOneRound(boardValues, playerInput) {
+	let playerInput = playerInput.split('');
+	
 
+
+
+	return;
 }
 
 
@@ -107,11 +117,17 @@ function playOneRound(boardValues, choicePlayer1, choicePlayer2) {
  */
 function ticTacToe() {
 	let boardValues = BOARD_INIT_VALUES	// Initial Board State
+	let togglePlayer = 0;
+	let XorO
 
 	do {
+
+		playOneRound(boardValues, ...);
 		
-		gameState = calculateGameState(boardValues)
-		generateBoard(boardValues)
+		gameState = calculateGameState(boardValues);
+		generateBoard(boardValues);
+
+		togglePlayer = !togglePlayer;
 	} while(gameState === false)
 
 	console.log(gameState, 'Wins!')
