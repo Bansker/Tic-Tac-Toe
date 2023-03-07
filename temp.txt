@@ -1,0 +1,19 @@
+function calculateGameState(boardValues) {
+	for(let row = 0; row < 3; row++) {
+		if(boardValues[row][2] && boardValues[row][1] === boardValues[row][0]) {
+			return boardValues[row][0];
+		}
+	}
+
+	for(let col = 0; col < 3; col++) {
+		if(boardValues[2][col] && boardValues[1][col] === boardValues[0][col]) {
+			return boardValues[0][col];
+		}
+	}
+
+	if(	(boardValues[0][0] && boardValues[1][1] === boardValues[2][2]) || (boardValues[2][0] && boardValues[1][1] === boardValues[0][2])) {
+		return boardValues[1][1];
+	}
+
+	return false;
+}
