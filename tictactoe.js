@@ -8,8 +8,12 @@
  * 
  */
 
+
+
 // Strict mode
 'use strict';
+
+
 
 // Testinput
 const testInput = [	[' ', ' ', ' '], 
@@ -17,21 +21,59 @@ const testInput = [	[' ', ' ', ' '],
 					[' ', ' ', ' '] ]
 
 
+
 /**
  * Global constants
  * ================================================================================
  */
 const BOARD_INIT_VALUES = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
-const COORDINATES = {A: 0, B: 1, C: 2}
 
 // Node Lib prompt-sync
 const prompt = require('prompt-sync')();
 
 
+
+/**
+ * Functions
+ * ================================================================================
+ */
+
+/**
+ * Let the computer choose his turn randomly and return a string literal. (eg. B3)
+ * @param		{Array} 	boardValues 3x3 index Array (2D)
+ * @returns	{String}							string literal of the chosen coordinate
+ */
+function computerChoice(boardValues) {
+	let axisY, axisX, choice = 0;
+	const COORDINATES = {0: 'A', 1: 'B', 2: 'C'}
+
+	do {
+		axisY = Math.floor(Math.random() * 3);
+		axisX = Math.floor(Math.random() * 3);
+		choice = boardValues[axisY][axisX];
+
+	} while(choice !== ' ');
+
+	return `${COORDINATES.axisY}${axisX}`;
+}
+
+
+
+function playerChoice(boardValues) {
+	const COORDINATES_NUM = {0: 'A', 1: 'B', 2: 'C'};
+	
+}
+
+function checkChoice(boardValues) {
+	
+	
+
+}
+
 /**
  * Generate and return the 3x3 board
- * @param	{Array} 	boardValues 3x3 index Array (2D)
- * @returns	{String}				formatted board grid with values (String literal)
+ * @param		{Array}		boardValues 3x3 index Array (2D)
+ * @returns	{String}							formatted board grid with values (String literal)
  */
 function generateBoard(boardValues) {
 	let board = '';
@@ -52,7 +94,7 @@ function generateBoard(boardValues) {
 	return board;
 }
 
-//console.log(generateBoard(testInput));
+
 
 /**
  * The core of the game. Calculate positions of X's and O's in the 3D Array.
@@ -95,19 +137,20 @@ function calculateGameState(boardValues) {
 }
 
 
+
 /**
  * Split up the input string and assign it to a grid coordinate
  * @param	{string} 	playerInput 	Input of Player 1 or 2
  * @param	{Array} 	boardValues 	3x3 index Array (2D)
- * @returns {Array}						3x3 index Array (2D), false if wrong input
+ * @returns {Array}								3x3 index Array (2D)
  */
 function playOneRound(boardValues, playerInput) {
-	let playerInput = playerInput.split('');
+	const COORDINATES = {'A': 0, 'B': 1, 'C': 2}
+	let playerInput = playerInput.toUpperCase().split('');
+
+
 	
-
-
-
-	return;
+	return boardValues;
 }
 
 
@@ -117,12 +160,17 @@ function playOneRound(boardValues, playerInput) {
  */
 function ticTacToe() {
 	let boardValues = BOARD_INIT_VALUES	// Initial Board State
-	let togglePlayer = 0;
-	let XorO
+	let togglePlayer = true;
+	let playerInput = 0;
 
 	do {
+		if(togglePlayer) {
+			playerInput = prompt('Choose Coorinates: ');
+		} else {
+			playerInput = computerChoice(boardValues);
+		}
 
-		playOneRound(boardValues, ...);
+		boardValues = playOneRound(boardValues, playerInput);
 		
 		gameState = calculateGameState(boardValues);
 		generateBoard(boardValues);
